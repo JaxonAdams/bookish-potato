@@ -1,6 +1,13 @@
 // Assignment code here
-const generatePassword = () => {
-  return 'password'
+const generatePassword = (charArr, length) => {
+  let passwordArr = [];
+  
+  for (let i = 0; i <= length; i++) {
+    let index = Math.floor(Math.random() * charArr.length + 1);
+    passwordArr.push(charArr[index]);
+  };
+
+  return passwordArr.join('');
 };
 
 const promptLowercase = () => {
@@ -49,11 +56,11 @@ const promptLength = () => {
 };
 
 const promptUser = () => {
-  // define starting arrays of characters
-  const lowercaseArr = 'abcdefghijklmnopqrstuvwxyz'.split('');
-  const uppercaseArr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  const numArr = '1234567890'.split('');
-  const specArr = '!"$#%&()*+,-./:;<=>?@[/]^_{|}~'.split('');
+  // define starting lists of characters
+  const lowercaseList = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercaseList = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numList = '1234567890';
+  const specList = '!"$#%&()*+,-./:;<=>?@[/]^_{|}~';
   let selectedCharArr = [];
 
   // prompt the user (and validate) and store data
@@ -78,9 +85,24 @@ const promptUser = () => {
     lengthConfirm = promptLength();
   };
 
-  console.log(lowercaseConfirm, uppercaseConfirm, numConfirm, specConfirm, lengthConfirm);
+  // push criteria to selectedCharArr
+  if (lowercaseConfirm === 1) {
+    selectedCharArr.push(lowercaseList);
+  }
+  if (uppercaseConfirm === 1) {
+    selectedCharArr.push(uppercaseList);
+  }
+  if (numConfirm === 1) {
+    selectedCharArr.push(numList);
+  }
+  if (specConfirm === 1) {
+    selectedCharArr.push(specList);
+  }
 
-  return generatePassword();
+  // format into single array
+  selectedCharArr = selectedCharArr.join().split('');
+
+  return generatePassword(selectedCharArr, lengthConfirm);
 };
 
 
@@ -94,7 +116,6 @@ function writePassword() {
 
   passwordText.value = password;
   console.log(password);
-
 }
 
 // Add event listener to generate button
